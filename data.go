@@ -9,7 +9,6 @@ package main
 import (
 	"context"
 	"database/sql"
-	"fmt"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/redis/go-redis/v9"
@@ -54,7 +53,7 @@ func query(uid string) {
 		}
 	}
 
-	fmt.Println("查询到", user)
+	log.Println("查询到", user)
 }
 
 func insert(username, created string) {
@@ -84,7 +83,7 @@ func insert(username, created string) {
 		log.Fatal("插入后错误", err)
 	}
 
-	fmt.Println("新建条目 ID", id)
+	log.Println("新建条目 ID", id)
 }
 
 func alter(username, id string) {
@@ -113,7 +112,7 @@ func alter(username, id string) {
 		log.Fatal("改后错误", err)
 	}
 
-	fmt.Println("修改操作影响", affect, "条")
+	log.Println("修改操作影响", affect, "条")
 }
 
 func del(id string) {
@@ -141,7 +140,7 @@ func del(id string) {
 
 	affect, err := res.RowsAffected()
 
-	fmt.Println("删除操作影响", affect, "条")
+	log.Println("删除操作影响", affect, "条")
 
 }
 
@@ -156,8 +155,8 @@ func rds() {
 	get := rdb.Get(ctx, "key")
 	set := rdb.Set(ctx, "key", "777", 0)
 
-	fmt.Println("r2", set.Val(), set.Err())
-	fmt.Println("r3", get.Val(), get.Err())
+	log.Println("r2", set.Val(), set.Err())
+	log.Println("r3", get.Val(), get.Err())
 
 	cmd := rdb.Do(ctx, "get", "key")
 	cmdResult, err := rdb.Do(ctx, "get", "key").Result()
@@ -172,9 +171,9 @@ func rds() {
 		log.Fatal(err)
 	}
 
-	fmt.Println("r4", cmd)
-	fmt.Println("r5", cmdResult.(string))
-	fmt.Println("r6", s)
+	log.Println("r4", cmd)
+	log.Println("r5", cmdResult.(string))
+	log.Println("r6", s)
 
 }
 
@@ -197,7 +196,7 @@ func md() {
 	}
 	id := res.InsertedID
 
-	fmt.Println(id)
+	log.Println(id)
 
 	var result struct {
 		Value float64
@@ -205,5 +204,5 @@ func md() {
 
 	err = collection.FindOne(context.Background(), bson.D{{"name", "pi"}}).Decode(&result)
 
-	fmt.Println(result)
+	log.Println(result)
 }
