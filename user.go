@@ -15,6 +15,8 @@ import (
 	"strconv"
 	"time"
 
+	log "github.com/sirupsen/logrus"
+
 	"github.com/gorilla/sessions"
 
 	"github.com/spf13/viper"
@@ -42,7 +44,7 @@ func getDNS() {
 
 	sqlInfo := viper.Get("mysql")
 
-	fmt.Println(sqlInfo)
+	log.Println(sqlInfo)
 }
 
 func whiteConf() {

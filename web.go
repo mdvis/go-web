@@ -1,42 +1,37 @@
 package main
 
 import (
-	"fmt"
-	"html/template"
 	"net/http"
 
 	log "github.com/sirupsen/logrus"
 )
 
-func escape(w http.ResponseWriter, r *http.Request) {
-	str := "<script>console.log(666);</script>"
-
-	fmt.Fprint(w, str, template.HTMLEscapeString(str))
-	template.HTMLEscape(w, []byte(str))
-}
-
 func main() {
+	log.Trace("trace msg")
+	log.Debug("debug msg")
+	log.Info("info msg")
+	log.Warn("warn msg")
+	log.Error("error msg")
 
-	log.WithFields(log.Fields{
-		"animal": "walrus",
-	}).Info("A walrus appears")
+	log.WithFields(log.Fields{"l_msg": "msg"}).Trace("trace msg")
+	log.WithFields(log.Fields{"l_msg": "msg"}).Debug("debug msg")
+	log.WithFields(log.Fields{"l_msg": "msg"}).Info("info msg")
+	log.WithFields(log.Fields{"l_msg": "msg"}).Warn("warn msg")
+	log.WithFields(log.Fields{"l_msg": "msg"}).Error("error msg")
+	// log.WithFields(log.Fields{"msg": "msg"}).Fatal("fatal msg")
+	// log.WithFields(log.Fields{"msg": "msg"}).Panic("panic msg")
 
 	http.HandleFunc("/", static)
+	http.HandleFunc("/api", api)
 	http.HandleFunc("/login", login)
-	http.HandleFunc("/event_source", sse)
+	http.HandleFunc("/match", match)
 	http.HandleFunc("/escape", escape)
 	http.HandleFunc("/upload", upload)
+	http.HandleFunc("/event_source", sse)
 	http.HandleFunc("/register", register)
 
-	query("11")
-	insert("aa", "2024-12-21")
-	alter("cc", "1")
-	del("8")
-
-	rds()
-	md()
-
 	err := http.ListenAndServe(":8090", nil)
+
 	if err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}

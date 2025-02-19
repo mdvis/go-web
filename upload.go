@@ -18,19 +18,19 @@ func upload(w http.ResponseWriter, r *http.Request) {
 		tpl := `
         <!DOCTYPE html>
         <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <title></title>
-        </head>
-        <body>
-        <form method="post" enctype="multipart/form-data" action="/upload">
-        <input type="file" name="files" multiple id="file">
-        <input type="submit" value="提交">
-        </form>
-        <script>
-        document.querySelector('#file').addEventListener('change', console.log);
-        </script>
-        </body>
+            <head>
+                <meta charset="UTF-8">
+                <title></title>
+            </head>
+            <body>
+                <form method="post" enctype="multipart/form-data" action="/upload">
+                <input type="file" name="files" multiple id="file">
+                <input type="submit" value="提交">
+                </form>
+                <script>
+                    document.querySelector('#file').addEventListener('change', console.log);
+                </script>
+            </body>
         </html>
         `
 		t := template.Must(template.New("file").Parse(tpl))

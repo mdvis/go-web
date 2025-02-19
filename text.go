@@ -52,8 +52,6 @@ func text(w http.ResponseWriter, r *http.Request) {
 
 	c, _ := xml.Marshal(v)
 
-	fmt.Println(v)
-
 	fmt.Fprintf(w, string(c))
 
 	n := &Recurlyservers{}
