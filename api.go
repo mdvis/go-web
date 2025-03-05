@@ -14,8 +14,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func escape(w http.ResponseWriter, r *http.Request) {
-
+func db(w http.ResponseWriter, r *http.Request) {
 	md()
 	rds()
 	del("8")
@@ -23,6 +22,9 @@ func escape(w http.ResponseWriter, r *http.Request) {
 	alter("cc", "1")
 	insert("aa", "2024-12-21")
 
+}
+
+func escape(w http.ResponseWriter, r *http.Request) {
 	str := "<script>console.log(666);</script>"
 
 	fmt.Fprint(w, str, template.HTMLEscapeString(str))
@@ -32,6 +34,7 @@ func escape(w http.ResponseWriter, r *http.Request) {
 func api(w http.ResponseWriter, r *http.Request) {
 	r.Header.Set("Content-Type", "application/json")
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	type Info struct {
 		Other string `json:"other"`

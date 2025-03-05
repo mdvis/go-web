@@ -22,6 +22,7 @@ func main() {
 	// log.WithFields(log.Fields{"msg": "msg"}).Panic("panic msg")
 
 	http.HandleFunc("/", static)
+	http.HandleFunc("/db", db)
 	http.HandleFunc("/api", api)
 	http.HandleFunc("/login", login)
 	http.HandleFunc("/match", match)
